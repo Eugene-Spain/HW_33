@@ -23,20 +23,102 @@ const divGallery = document.createElement('div')
 document.body.append(divGallery)
 images.forEach(image => {
     const imgGallery = document.createElement('img')
-        imgGallery.src = image.src
-        imgGallery.alt = image.alt
+    imgGallery.src = image.src
+    imgGallery.alt = image.alt
+    imgGallery.dataset.dayOfPublication = "10 of May 2024"
     imgGallery.style.cssText = 'width: 380px; height: 250px; border: 6px solid transparent; border-radius: 30px'
-    divGallery.append(imgGallery)  
+    divGallery.append(imgGallery)
+
+    function showModal(altOfImg, dayOfPublication, imgSrc) {
+        const modal = document.createElement('div')
+        document.body.append(modal)
+
+        modal.classList.add('modal')
+        modal.innerHTML = `
+        <div class = "modalWrapper">
+            <div class = "headingWrapper">
+                <h2> ${altOfImg} </h2>
+                <span class = "closeModal"> X </span>
+            </div>
+            <div class = "contentWrapper">
+                <p> Added on ${dayOfPublication}</p>
+                <img src="${imgSrc}" alt="${altOfImg}">
+            </div>
+        </div>`
+        modal.querySelector('.closeModal').addEventListener('click', () => {
+            modal.style.display = 'none'
+        })
+
+    }
+
+    imgGallery.addEventListener('click', () => {
+        showModal(imgGallery.alt, imgGallery.dataset.dayOfPublication, imgGallery.src)
+    })
 })
+
+const styleElement = document.createElement('style');
+document.head.appendChild(styleElement);
+styleElement.innerHTML = `
+    .modal {
+        display: block;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
+
+    .modalWrapper {
+        background-color: white;
+        margin: 5vw auto;
+        padding: 20px;
+        border: 2px solid black;
+        width: 70%;
+        border-radius: 10px;
+        position: relative;
+        display:flex;
+        flex-direction: column;
+    }
+
+    .headingWrapper{
+        display: flex;
+        justify-content: space-between ;
+        font-size: 26px;
+    }
+
+    .contentWrapper{
+        display: flex;
+        flex-direction : column;
+        justify-content : center;
+        font-size: 22px;
+    }
+
+    .closeModal {
+        color: grey;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .closeModal:hover,
+    .closeModal:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    `
+
+
 divGallery.classList.add('wrapper')
 const imagesWrapper = document.querySelector('.wrapper')
 imagesWrapper.style.cssText = 'display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: center; width: 1600px; border: 3px solid gray; border-radius: 50px; overflow: hidden;'
 
-imagesWrapper.addEventListener ('click', () => {
-    const imagesArray = Array.from(imagesWrapper.querySelectorAll('img'));
-    imagesArray.sort(() => Math.random() - 0.5)
-    imagesWrapper.innerHTML = ""
-    imagesArray.forEach(image => {
-        imagesWrapper.append(image)
-    })
-})
+// imagesWrapper.addEventListener ('click', () => {
+//     const imagesArray = Array.from(imagesWrapper.querySelectorAll('img'));
+//     imagesArray.sort(() => Math.random() - 0.5)
+//     imagesWrapper.innerHTML = ""
+//     imagesArray.forEach(image => {
+//         imagesWrapper.append(image)
+//     })
+// })
+
