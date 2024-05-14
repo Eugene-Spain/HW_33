@@ -95,8 +95,7 @@ styleElement.innerHTML = `
     }
 
     .closeModal {
-        color: #aaa;
-        float: right;
+        color: grey;
         font-size: 28px;
         font-weight: bold;
     }
